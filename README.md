@@ -47,7 +47,7 @@ The main objectives of this project are:
 
 ---
 
-# 🧠 System Architecture
+## 🧠 System Architecture
 
 The overall architecture of the project is:
 
@@ -122,7 +122,7 @@ The overall architecture of the project is:
                     │ Streamlit Web App    │
                     └──────────────────────┘
 
----
+```
 
 ## 📊 Dataset
 
@@ -166,7 +166,7 @@ The model supports the following 24 classes:
 23. Peptic Ulcer Disease
 24. Urinary Tract Infection
 
----
+
 
 ## 🔄 Data Preprocessing
 
@@ -186,6 +186,7 @@ The preprocessing pipeline includes:
 
 ```text
 My skin is Yellowish!!!
+```
 
 ## 🔁 Data Augmentation
 
@@ -201,6 +202,7 @@ My eyes look yellow and I feel weak.
 I noticed yellowing of my skin and eyes.
 
 My skin is turning yellow and I have been feeling fatigued.
+```
 
 # 🤖 Deep Learning Model
 
@@ -228,6 +230,99 @@ Dropout
 Softmax Output
 
 ```
+
+## ⚙️ Important Model Parameters
+
+Parameter	Value
+Vocabulary Size	10,000
+Sequence Length	60
+Embedding Dimension	128
+LSTM Units	96
+Dense Units	64
+Dropout	0.25 / 0.20
+Optimizer	Adam
+Learning Rate	0.0005
+Batch Size	32
+Maximum Epochs	40
+Early Stopping Patience	5
+Output Activation	Softmax
+
+
+## Training Configuration
+The model uses:
+- Adam optimizer for optimization
+- Sparse categorical cross-entropy as the loss function
+- Softmax activation for multi-class classification
+- Early stopping to prevent unnecessary training
+- Model checkpointing to preserve the best-performing model
+Early stopping monitors validation performance and stops training when the validation loss does not improve for a specified number of epochs.
+
+## 🔍 TF-IDF Semantic Similarity
+In addition to the Bi-LSTM prediction, the application uses TF-IDF-based semantic similarity.
+TF-IDF converts text into numerical vectors based on the importance of words in the dataset.
+The application then uses cosine similarity to compare the user's symptom description with symptom descriptions from the training data.
+The purpose of this component is to determine whether the user's input is sufficiently similar to the type of symptom descriptions the model has seen during training.
+## 🎯 Prediction Filtering
+The system combines two signals:
+```text
+Bi-LSTM Prediction Confidence
+              +
+TF-IDF Semantic Similarity
+              ↓
+       Final Decision
+```
+The current thresholds are:
+```test
+Confidence Threshold = 0.70
+
+Similarity Threshold = 0.20
+```
+A prediction is accepted only when both conditions are satisfied:
+```text
+Confidence ≥ 0.70
+        AND
+Similarity ≥ 0.20
+```
+If the input does not satisfy these conditions, the application avoids presenting the prediction as a reliable health-condition result.
+This provides an additional layer of uncertainty handling for unfamiliar or poorly represented inputs.
+
+## 📈 Model Evaluation
+The project evaluates the classification model using standard classification metrics:
+- Accuracy
+- Precision
+- Recall
+- F1-score 
+- Confusion Matrix
+
+### 📊 Baseline Model
+A TF-IDF + Logistic Regression model was initially developed as a baseline for comparison.
+The baseline achieved approximately:
+```text
+Accuracy: 88.1%
+```
+This baseline was useful for comparing traditional machine-learning classification with the Deep Learning approach.
+
+### 🧠 Bi-LSTM Model
+The original Bi-LSTM model achieved approximately:
+```text
+Test Accuracy: 80.2%
+```
+
+
+## 💻 Streamlit Application
+The trained model is integrated into an interactive Streamlit web application.
+The application allows users to:
+- Enter a natural-language description of their symptoms.
+- Submit the symptoms for analysis.
+- Receive a predicted health condition when the model is sufficiently confident.
+- View a general condition overview.
+- View common symptoms and health-awareness information.
+- View information about when professional medical attention may be appropriate.
+- View technical prediction information such as confidence and similarity scores.
+The Bi-LSTM was retained as the primary deployed model because the project is focused on Deep Learning-based natural-language health classification.
+The model was subsequently improved using additional paraphrased training examples and fine-tuning.
+Note: The final performance metrics should be updated here after completing the final augmented-model training and evaluation.
+
 
 ### 🖥️ Application Workflow
 The Streamlit application follows this workflow:
