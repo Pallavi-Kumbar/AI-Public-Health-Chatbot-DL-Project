@@ -233,19 +233,20 @@ Softmax Output
 
 ## ⚙️ Important Model Parameters
 
-Parameter	Value
-Vocabulary Size	10,000
-Sequence Length	60
-Embedding Dimension	128
-LSTM Units	96
-Dense Units	64
-Dropout	0.25 / 0.20
-Optimizer	Adam
-Learning Rate	0.0005
-Batch Size	32
-Maximum Epochs	40
-Early Stopping Patience	5
-Output Activation	Softmax
+| Parameter | Value |
+|---|---:|
+| Vocabulary Size | 10,000 |
+| Sequence Length | 60 |
+| Embedding Dimension | 128 |
+| LSTM Units | 96 |
+| Dense Units | 64 |
+| Dropout | 0.25 / 0.20 |
+| Optimizer | Adam |
+| Learning Rate | 0.005 |
+| Batch Size | 32 |
+| Maximum Epochs | 40 |
+| Early Stopping Patience | 5 |
+| Output Activation | Softmax |
 
 
 ## Training Configuration
